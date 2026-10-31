@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Pixel rendering utilities */
+  .pixel-art {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+}
+
+@keyframes floatFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -10px) scale(1.1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -30px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -45px) scale(0.9);
+  }
+}
+
+.animate-float-fade {
+  animation: floatFade 1.1s ease-out forwards;
+}
+
+@keyframes bounceOnce {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-bounce-once {
+  animation: bounceOnce 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Custom scrollbar matching retro RPG aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1ebd8;
+  border: 1px solid #2d2740;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3b89e;
+  border: 1px solid #2d2740;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a89c80;
+}
