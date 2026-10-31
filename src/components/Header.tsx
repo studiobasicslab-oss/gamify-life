@@ -1,10 +1,11 @@
 import React from 'react';
-import { Volume2, VolumeX, Save, RotateCcw } from 'lucide-react';
+import { Volume2, VolumeX, Save, RotateCcw, Calendar } from 'lucide-react';
 
 interface HeaderProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
   onOpenSaveModal: () => void;
+  onOpenCalendar: () => void;
   onReset: () => void;
 }
 
@@ -12,12 +13,13 @@ export const Header: React.FC<HeaderProps> = ({
   soundEnabled,
   onToggleSound,
   onOpenSaveModal,
+  onOpenCalendar,
   onReset,
 }) => {
   return (
     <header className="w-full mb-6">
       {/* Top utility bar */}
-      <div className="flex items-center justify-between mb-3 px-2">
+      <div className="flex items-center justify-between mb-3 px-2 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <span className="inline-block w-3 h-3 bg-green-500 border border-[#2d2740] rounded-none animate-pulse"></span>
           <span className="font-retro text-xs tracking-wider text-[#4c4270] uppercase">
@@ -26,6 +28,15 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={onOpenCalendar}
+            title="Open Quest Log & Calendar"
+            className="flex items-center gap-1 px-2.5 py-1 bg-[#eef0fb] hover:bg-[#e0e4f7] border-2 border-[#2d2740] shadow-pixel-sm active:translate-x-[1px] active:translate-y-[1px] font-retro text-xs text-[#2d2740] transition-all"
+          >
+            <Calendar size={14} className="text-[#3b6f99]" />
+            <span>CALENDAR</span>
+          </button>
+
           <button
             onClick={onToggleSound}
             title={soundEnabled ? 'Mute 8-bit Audio' : 'Unmute 8-bit Audio'}
@@ -95,3 +106,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+

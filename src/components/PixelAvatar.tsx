@@ -195,3 +195,4 @@ export const PixelAvatar: React.FC<PixelAvatarProps> = ({ avatarId, size = 64, c
       );
   }
 };
+

@@ -30,3 +30,4 @@ export const FloatingXpEffect: React.FC<FloatingXpEffectProps> = ({ items }) => 
     </div>
   );
 };
+

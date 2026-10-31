@@ -15,6 +15,9 @@ export const INITIAL_STATE: GameState = {
   gold: 60,
   soundEnabled: true,
   lastLoginDate: new Date().toISOString().split('T')[0],
+  lastActiveDate: new Date().toISOString().split('T')[0],
+  streak: 1,
+  restDays: 0,
   chestClaimedToday: false,
   stats: [
     { id: 'knowledge', name: 'Knowledge', level: 1, xp: 40, maxXp: 100, icon: '📘', color: '#3b6f99', barColor: '#6da678' },
@@ -124,3 +127,4 @@ export function importSaveFile(file: File): Promise<GameState> {
     reader.readAsText(file);
   });
 }
+

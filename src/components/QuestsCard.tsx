@@ -255,3 +255,4 @@ export const QuestsCard: React.FC<QuestsCardProps> = ({
     </div>
   );
 };
+

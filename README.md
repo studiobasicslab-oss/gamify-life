@@ -60,3 +60,4 @@ Inspired by the retro game poster, it turns everyday habits, learning, and self-
    - 100% offline local storage in browser database.
    - **Cross-device capability without cloud**: Click **"Save Card"** to export `savefile.json` and restore it on any phone or laptop.
    - Built-in Web Audio API 8-bit chiptune synthesizer (sound toggleable anytime).
+

@@ -14,12 +14,15 @@ import { RewardsCard } from './components/RewardsCard';
 import { ProgressSummaryCard } from './components/ProgressSummaryCard';
 import { MemoryCardModal } from './components/MemoryCardModal';
 import { LevelUpModal } from './components/LevelUpModal';
+import { CampfireStreak } from './components/CampfireStreak';
+import { QuestCalendarModal } from './components/QuestCalendarModal';
 import { FloatingXpEffect, FloatingItem } from './components/FloatingXpEffect';
 import { Download, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [state, setState] = useState<GameState>(() => loadSavedState());
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [showLevelUpModal, setShowLevelUpModal] = useState(false);
   const [floatingItems, setFloatingItems] = useState<FloatingItem[]>([]);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -124,6 +127,23 @@ export const App: React.FC = () => {
         questsCompleted: 0,
       };
 
+      // Calculate Cozy Campfire Streak (No penalty for rest days)
+      let newStreak = prev.streak || 1;
+      let newRestDays = prev.restDays || 0;
+      if (prev.lastActiveDate && prev.lastActiveDate !== today) {
+        const lastDate = new Date(prev.lastActiveDate);
+        const curDate = new Date(today);
+        const diffTime = Math.abs(curDate.getTime() - lastDate.getTime());
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          newStreak += 1;
+        } else if (diffDays > 1) {
+          // Rest days taken - streak continues without resetting to 0!
+          newRestDays += (diffDays - 1);
+          newStreak += 1;
+        }
+      }
+
       return {
         ...prev,
         level: newLevel,
@@ -132,6 +152,9 @@ export const App: React.FC = () => {
         totalXp: newTotalXp,
         gold: prev.gold + goldGain + bonusGold,
         stats: updatedStats,
+        lastActiveDate: today,
+        streak: newStreak,
+        restDays: newRestDays,
         history: {
           ...prev.history,
           [today]: {
@@ -247,11 +270,19 @@ export const App: React.FC = () => {
           setState((prev) => ({ ...prev, soundEnabled: !prev.soundEnabled }))
         }
         onOpenSaveModal={() => setShowSaveModal(true)}
+        onOpenCalendar={() => setShowCalendarModal(true)}
         onReset={() => {
           if (window.confirm('Restart game from beginning?')) {
             setState(INITIAL_STATE);
           }
         }}
+      />
+
+      {/* Cozy Campfire Streak (No Penalty for Rest Days) */}
+      <CampfireStreak
+        streak={state.streak || 1}
+        restDays={state.restDays || 0}
+        isActiveToday={Boolean((state.history[new Date().toISOString().split('T')[0]]?.xpEarned || 0) > 0)}
       />
 
       {/* Mobile Quick-View Tabs (when on small screens) */}
@@ -425,6 +456,15 @@ export const App: React.FC = () => {
         />
       )}
 
+      {/* 8-Bit Quest Log & Calendar Modal */}
+      {showCalendarModal && (
+        <QuestCalendarModal
+          history={state.history}
+          onClose={() => setShowCalendarModal(false)}
+          onPlayClickSound={() => playSound(() => soundManager.playClick())}
+        />
+      )}
+
       {/* Level Up Celebration Modal */}
       {showLevelUpModal && (
         <LevelUpModal
@@ -436,3 +476,4 @@ export const App: React.FC = () => {
     </div>
   );
 };
+

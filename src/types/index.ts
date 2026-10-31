@@ -74,5 +74,9 @@ export interface GameState {
   soundEnabled: boolean;
   history: Record<string, DayLog>;
   lastLoginDate: string;
+  lastActiveDate?: string;
+  streak: number;
+  restDays: number;
   chestClaimedToday: boolean;
 }
+

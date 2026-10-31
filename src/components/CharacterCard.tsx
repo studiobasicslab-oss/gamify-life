@@ -157,3 +157,4 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
     </div>
   );
 };
+

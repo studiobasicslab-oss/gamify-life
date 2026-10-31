@@ -112,3 +112,4 @@ export const LevelCard: React.FC<LevelCardProps> = ({
     </div>
   );
 };
+

@@ -191,3 +191,4 @@ export const EarnXpCard: React.FC<EarnXpCardProps> = ({
     </div>
   );
 };
+

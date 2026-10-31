@@ -166,3 +166,4 @@ class RetroAudio {
 }
 
 export const soundManager = new RetroAudio();
+
